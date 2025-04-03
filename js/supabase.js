@@ -3,7 +3,7 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 
 // Supabase URL and public anon key (safe to expose in client-side code)
 const supabaseUrl = 'https://wjhzmlpwxtborscttmqd.supabase.co'
-const supabaseKey = 'nT1coZW7By/gKIWMR9WoQh597Cz9rDipuE5+yLncIaa9XSpFox4mW+euKK4Pio9ZxCQS0YIC5QNuZYDaAJnOFA=='
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqaHptbHB3eHRib3JzY3R0bXFkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMxMTM1OTgsImV4cCI6MjA1ODY4OTU5OH0.wKvMm28JIJf_eKyi2Jv1l-r3DfAPKL8fJCGoIsyw_FU'
 
 // Initialize the Supabase client
 const supabase = createClient(supabaseUrl, supabaseKey)
