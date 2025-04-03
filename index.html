@@ -165,48 +165,48 @@
         }
         
         .products {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 3rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 3rem;
         }
-        
+
         .product {
-            position: relative;
+        position: relative;
         }
-        
+
         .product-img {
-            width: 100%;
-            height: 55vh;
-            object-fit: cover;
-            transition: filter 0.5s ease;
+         width: 100%;
+         aspect-ratio: 2 / 3; /* Changed to 2:3 aspect ratio */
+         object-fit: cover;
+         transition: filter 0.5s ease;
         }
-        
+
         .product:hover .product-img {
-            filter: brightness(0.95);
+        filter: brightness(0.95);
         }
-        
+
         .product-info {
-            margin-top: 1.2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+        margin-top: 1.2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
         }
-        
+
         .product-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem;
-            font-weight: 400;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.3rem;
+        font-weight: 400;
         }
-        
+
         .product-subtitle {
-            font-size: 0.9rem;
-            color: #888;
-            margin-top: 0.3rem;
+        font-size: 0.9rem;
+        color: #888;
+        margin-top: 0.3rem;
         }
-        
+
         .product-price {
-            font-size: 1rem;
-            color: #5c5c5c;
+        font-size: 1rem;
+        color: #5c5c5c;
         }
         
         /* About section */
