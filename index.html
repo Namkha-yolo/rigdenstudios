@@ -91,10 +91,6 @@
         .hero {
             height: 100vh;
             background-image: url('./img/background.png');
-            /* The following properties aren't valid but are left here if you intended layering:
-               background-image2: url('./img/BaCKG2.png');
-               background-image3: url('./img/BaCKG1.png');
-            */
             background-size: cover;
             background-position: center;
             position: relative;
@@ -169,48 +165,48 @@
         }
         
         .products {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 3rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 3rem;
         }
-        
+
         .product {
-            position: relative;
+        position: relative;
         }
-        
+
         .product-img {
-            width: 100%;
-            aspect-ratio: 2 / 3; /* Changed to 2:3 aspect ratio */
-            object-fit: cover;
-            transition: filter 0.5s ease;
+         width: 100%;
+         aspect-ratio: 2 / 3; /* Changed to 2:3 aspect ratio */
+         object-fit: cover;
+         transition: filter 0.5s ease;
         }
-        
+
         .product:hover .product-img {
-            filter: brightness(0.95);
+        filter: brightness(0.95);
         }
-        
+
         .product-info {
-            margin-top: 1.2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+        margin-top: 1.2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
         }
-        
+
         .product-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem;
-            font-weight: 400;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.3rem;
+        font-weight: 400;
         }
-        
+
         .product-subtitle {
-            font-size: 0.9rem;
-            color: #888;
-            margin-top: 0.3rem;
+        font-size: 0.9rem;
+        color: #888;
+        margin-top: 0.3rem;
         }
-        
+
         .product-price {
-            font-size: 1rem;
-            color: #5c5c5c;
+        font-size: 1rem;
+        color: #5c5c5c;
         }
         
         /* About section */
@@ -627,10 +623,8 @@
     </section>
     
     <section class="about" id="about">
-        <div class="container">
-            <!-- Fixing the previously malformed attribute -->
-            <img src="./img/BaCKG1.png" alt="Background 1" style="display:none;">
-            <img src="./img/BaCKG2.png" alt="Background 2" style="display:none;">
+        <div class="container", img src="./img/BaCKG1.png">
+            <img src="./img/BaCKG2.png">
             <h2 class="section-title">Our Philosophy: Threads of Connection</h2>
             <div class="about-content">
                 <p>Wearing Our Identity</p>
@@ -638,14 +632,6 @@
                 <p>Each stitch carries a story. Each pattern speaks of roots, of belonging, of journeys taken and memories preserved. Our garments are not simply made. They are crafted as vessels of culture, designed to carry your heritage wherever you go.</p>
                 <p>We understand that true connection transcends geography. It lives in the fabric of who we are. Rigden is not just a brand. We are a testament to the enduring power of cultural identity—woven, worn, and celebrated.</p>
             </div>
-        </div>
-    </section>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Home far from home</h1>
-            <p>Inspired by Bhutanese living far from home, yet staying deeply connected to their roots.</p>
-            <a href="#collection" class="btn">EXPLORE</a>
         </div>
     </section>
     
@@ -656,14 +642,14 @@
                     <h3 class="footer-title">Contact</h3>
                     <ul class="footer-links">
                         <li><a href="mailto:hello@rigden.store">hello@rigden.store</a></li>
-                        <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
-                        <li><a href="https://pinterest.com" target="_blank">Pinterest</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Pinterest</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h3 class="footer-title">Shop</h3>
                     <ul class="footer-links">
-                        <li><a href="#collection">All Products</a></li>
+                        <li><a href="#">All Products</a></li>
                         <li><a href="#">New Arrivals</a></li>
                         <li><a href="#">Featured</a></li>
                     </ul>
@@ -671,7 +657,7 @@
                 <div class="footer-col">
                     <h3 class="footer-title">Information</h3>
                     <ul class="footer-links">
-                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#">About Us</a></li>
                         <li><a href="#">Shipping & Returns</a></li>
                         <li><a href="#">Privacy Policy</a></li>
                     </ul>
@@ -728,7 +714,7 @@
                     const productId = button.getAttribute('data-id');
                     const productEl = button.closest('.product');
                     const productName = productEl.querySelector('.product-title').textContent;
-                    const productPrice = parseFloat(productEl.querySelector('.product-price').textContent.replace('$',''));
+                    const productPrice = parseFloat(productEl.querySelector('.product-price').textContent.replace('');
                     const productImage = productEl.querySelector('img').getAttribute('src');
                     
                     // Add product to cart
