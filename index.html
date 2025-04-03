@@ -597,13 +597,24 @@
                     <button class="add-to-cart" data-id="2">Add to Cart</button>
                 </div>
                 <div class="product">
-                    <img src="/api/placeholder/800/1100" alt="Mountain View" class="product-img">
+                    <img src="./img/rigden_hoodie.png" alt="Rigden Hoodie" class="product-img">
                     <div class="product-info">
                         <div>
                             <h3 class="product-title">Rigden Hoodie</h3>
                             <p class="product-subtitle">Druk Spirit Collection Hoodies</p>
                         </div>
                         <p class="product-price">$60</p>
+                    </div>
+                    <button class="add-to-cart" data-id="3">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="./img/brown_tee.png" alt="The Crown Tee" class="product-img">
+                    <div class="product-info">
+                        <div>
+                            <h3 class="product-title">The Crown T-shirt</h3>
+                            <p class="product-subtitle">Crown of Bhutan - T-shirt</p>
+                        </div>
+                        <p class="product-price">$25</p>
                     </div>
                     <button class="add-to-cart" data-id="3">Add to Cart</button>
                 </div>
@@ -700,9 +711,7 @@
                     const productId = button.getAttribute('data-id');
                     const productEl = button.closest('.product');
                     const productName = productEl.querySelector('.product-title').textContent;
-                    const productPrice = parseFloat(productEl.querySelector('.product-price').textContent.replace('
-</body>
-</html>, ''));
+                    const productPrice = parseFloat(productEl.querySelector('.product-price').textContent.replace('')
                     const productImage = productEl.querySelector('img').getAttribute('src');
                     
                     // Add product to cart
