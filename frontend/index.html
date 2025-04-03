@@ -1,1 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rigden | A Home Away From Home</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Poppins:wght@200;300;400&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #fbfbfb;
+            color: #333;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+        
+        a:hover {
+            color: #8b786d;
+        }
+        
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Elegant header */
+        header {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            padding: 2rem 4rem;
+        }
+        
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+        
+        nav {
+            display: flex;
+            gap: 2.5rem;
+        }
+        
+        nav a {
+            font-size: 0.9rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: #fff;
+            position: relative;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #fff;
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero section */
+        .hero {
+            height: 100vh;
+            background-image: url('https://i.pinimg.com/736x/4b/ae/13/4bae13a108c649f3bf24f678546fd129.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%);
+        }
+        
+        .hero-content {
+            position: relative;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+        
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            font-weight: 200;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2.5rem;
+            border: 1px solid #fff;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            font-weight: 300;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+        
+        /* Collection section */
+        .collection {
+            padding: 8rem 0;
+        }
+        
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 4rem;
+            letter-spacing: 2px;
+        }
+        
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+        
+        .product {
+            position: relative;
+        }
+        
+        .product-img {
+            width: 100%;
+            height: 55vh;
+            object-fit: cover;
+            transition: filter 0.5s ease;
+        }
+        
+        .product:hover .product-img {
+            filter: brightness(0.95);
+        }
+        
+        .product-info {
+            margin-top: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
+        .product-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 400;
+        }
+        
+        .product-subtitle {
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 0.3rem;
+        }
+        
+        .product-price {
+            font-size: 1rem;
+            color: #5c5c5c;
+        }
+        
+        /* About section */
+        .about {
+            padding: 6rem 0;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+        
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .about p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 4rem 0;
+            background-color: #222;
+            color: #fff;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-col {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #fff;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            color: #777;
+            font-size: 0.85rem;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem 2rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .products {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .product-img {
+                height: 45vh;
+            }
+        }
+        
+        /* Cart styling */
+        .cart-wrapper {
+            position: relative;
+        }
+        
+        .cart-icon {
+            display: flex;
+            align-items: center;
+            position: relative;
+            color: #fff;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #8b786d;
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Cart dropdown */
+        .cart-dropdown {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            width: 320px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 100;
+            padding: 1.5rem;
+            display: none;
+            margin-top: 0.5rem;
+        }
+        
+        .cart-dropdown.active {
+            display: block;
+        }
+        
+        .cart-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+        
+        /* Cart items */
+        .cart-items {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .empty-cart {
+            text-align: center;
+            color: #888;
+            padding: 2rem 0;
+        }
+        
+        .cart-item {
+            display: flex;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+        }
+        
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            overflow: hidden;
+            margin-right: 1rem;
+        }
+        
+        .cart-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .cart-item-details {
+            flex: 1;
+        }
+        
+        .cart-item-details h4 {
+            font-size: 0.95rem;
+            font-weight: 400;
+            margin-bottom: 0.3rem;
+        }
+        
+        .cart-item-price {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+        }
+        
+        .quantity-btn {
+            width: 24px;
+            height: 24px;
+            border: 1px solid #ddd;
+            background: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .cart-item-quantity span {
+            margin: 0 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .remove-item {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        /* Cart footer */
+        .cart-footer {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+        }
+        
+        .cart-total-wrapper {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        .checkout-button {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #333;
+            color: white;
+            border: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .checkout-button:hover {
+            background-color: #222;
+        }
+        
+        /* Add to cart button */
+        .add-to-cart {
+            margin-top: 1rem;
+            padding: 0.6rem 1.2rem;
+            background: none;
+            border: 1px solid #333;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #333;
+            color: white;
+        }
+        
+        /* Add confirmation message */
+        .add-confirmation {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0,0,0,0.7);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2px;
+            font-size: 0.85rem;
+            animation: fadeOut 2s;
+        }
+        
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            nav {
+                gap: 1.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .cart-dropdown {
+                width: 100%;
+                position: fixed;
+                top: auto;
+                bottom: 0;
+                left: 0;
+                margin-top: 0;
+                box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">RIGDEN</div>
+        <nav>
+            <a href="#collection">Collection</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <div class="cart-wrapper">
+            <a href="#" id="cart-icon" class="cart-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 22C9.55228 22 10 21.5523 10 21C10 20.4477 9.55228 20 9 20C8.44772 20 8 20.4477 8 21C8 21.5523 8.44772 22 9 22Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M20 22C20.5523 22 21 21.5523 21 21C21 20.4477 20.5523 20 20 20C19.4477 20 19 20.4477 19 21C19 21.5523 19.4477 22 20 22Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M1 1H5L7.68 14.39C7.77144 14.8504 8.02191 15.264 8.38755 15.5583C8.75318 15.8526 9.2107 16.009 9.68 16H19.4C19.8693 16.009 20.3268 15.8526 20.6925 15.5583C21.0581 15.264 21.3086 14.8504 21.4 14.39L23 6H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span id="cart-count" class="cart-count"></span>
+            </a>
+            
+            <!-- Cart Dropdown -->
+            <div id="cart-dropdown" class="cart-dropdown">
+                <h3 class="cart-title">Your Cart</h3>
+                <div id="cart-items" class="cart-items">
+                    <!-- Cart items will be inserted here by JavaScript -->
+                </div>
+                <div class="cart-footer">
+                    <div class="cart-total-wrapper">
+                        <span>Total:</span>
+                        <span id="cart-total" class="cart-total">$0.00</span>
+                    </div>
+                    <button id="checkout-button" class="checkout-button">Checkout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Home far from home</h1>
+            <p>Inspired by Bhutanese living far from home, yet staying deeply connected to their roots.</p>
+            <a href="#collection" class="btn">EXPLORE</a>
+        </div>
+    </section>
+    
+    <section class="collection" id="collection">
+        <div class="container">
+            <h2 class="section-title">Our Collection</h2>
+            <div class="products">
+                <div class="product">
+                    <img src="https://i.pinimg.com/736x/04/11/03/0411034596420ee22aef87a6d1ed5ad3.jpg" alt="Mountain View" class="product-img">
+                    <div class="product-info">
+                        <div>
+                            <h3 class="product-title">Druk Hoodie</h3>
+                            <p class="product-subtitle">Bhutan flag - hoodie</p>
+                        </div>
+                        <p class="product-price">$60</p>
+                    </div>
+                    <button class="add-to-cart" data-id="1">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="https://i.pinimg.com/736x/4b/ae/13/4bae13a108c649f3bf24f678546fd129.jpg" alt="Mountain View" class="product-img">
+                    <div class="product-info">
+                        <div>
+                            <h3 class="product-title">Druk Zipper</h3>
+                            <p class="product-subtitle">Bhutan flag - zipped hoodie</p>
+                        </div>
+                        <p class="product-price">$70</p>
+                    </div>
+                    <button class="add-to-cart" data-id="2">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="/api/placeholder/800/1100" alt="Mountain View" class="product-img">
+                    <div class="product-info">
+                        <div>
+                            <h3 class="product-title">Rigden Hoodie</h3>
+                            <p class="product-subtitle">Druk Spirit Collection Hoodies</p>
+                        </div>
+                        <p class="product-price">$60</p>
+                    </div>
+                    <button class="add-to-cart" data-id="3">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">Our Philosophy</h2>
+            <div class="about-content">
+                <p>At Rigden, we believe in the transformative power of mountain landscapes. Every piece in our collection is designed to capture the essence of the majestic Himalayas — their timeless beauty, calming presence, and profound simplicity.</p>
+                <p>Each product is crafted with sustainable materials and ethical practices, honoring both the natural world that inspires us and the artisans who bring our vision to life.</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3 class="footer-title">Contact</h3>
+                    <ul class="footer-links">
+                        <li><a href="mailto:hello@rigden.store">hello@rigden.store</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Pinterest</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 class="footer-title">Shop</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">All Products</a></li>
+                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="#">Featured</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 class="footer-title">Information</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Rigden. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Include cart functionality -->
+    <script src="js/supabase.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/checkout.js"></script>
+    
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Initialize cart functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            // Toggle cart dropdown
+            const cartIcon = document.getElementById('cart-icon');
+            const cartDropdown = document.getElementById('cart-dropdown');
+            
+            if (cartIcon && cartDropdown) {
+                cartIcon.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    cartDropdown.classList.toggle('active');
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!cartIcon.contains(e.target) && !cartDropdown.contains(e.target)) {
+                        cartDropdown.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Initialize product interactions
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+            
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const productId = button.getAttribute('data-id');
+                    const productEl = button.closest('.product');
+                    const productName = productEl.querySelector('.product-title').textContent;
+                    const productPrice = parseFloat(productEl.querySelector('.product-price').textContent.replace('
+</body>
+</html>, ''));
+                    const productImage = productEl.querySelector('img').getAttribute('src');
+                    
+                    // Add product to cart
+                    addToCart({
+                        id: productId,
+                        name: productName,
+                        price: productPrice,
+                        image_url: productImage
+                    });
+                    
+                    // Show confirmation message
+                    const confirmationMessage = document.createElement('div');
+                    confirmationMessage.className = 'add-confirmation';
+                    confirmationMessage.textContent = 'Added to cart';
+                    button.parentNode.appendChild(confirmationMessage);
+                    
+                    setTimeout(() => {
+                        confirmationMessage.remove();
+                    }, 2000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
 
