@@ -86,6 +86,69 @@
         nav a:hover::after {
             width: 100%;
         }
+
+        /* Lower Background Settings */
+        .zer {
+            height: 100vh;
+            background-image: url('./img/BaCKG2.png');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+        
+        .zer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%);
+        }
+        
+        .zer-content {
+            position: relative;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+        
+        .zer h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .zero p {
+            font-size: 1.1rem;
+            font-weight: 200;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2.5rem;
+            border: 1px solid #fff;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            font-weight: 300;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
         
         /* Hero section */
         .hero {
@@ -621,19 +684,25 @@
             </div>
         </div>
     </section>
+
     
-    <section class="about" id="about">
-        <div class="container", img src="./img/BaCKG1.png">
-            <img src="./img/BaCKG2.png">
-            <h2 class="section-title">Our Philosophy: Threads of Connection</h2>
-            <div class="about-content">
-                <p>Wearing Our Identity</p>
-                <p>We believe clothing is more than protection. It is identity. For those far from home, apparel becomes a bridge—connecting past to present, homeland to horizon.</p>
-                <p>Each stitch carries a story. Each pattern speaks of roots, of belonging, of journeys taken and memories preserved. Our garments are not simply made. They are crafted as vessels of culture, designed to carry your heritage wherever you go.</p>
-                <p>We understand that true connection transcends geography. It lives in the fabric of who we are. Rigden is not just a brand. We are a testament to the enduring power of cultural identity—woven, worn, and celebrated.</p>
-            </div>
+    <section class="zer">
+        <div class="zer-content">
+            <section class="about" id="about">
+                <div class="container", img src="./img/BaCKG1.png">
+                    <img src="./img/BaCKG2.png">
+                    <h2 class="section-title">Our Philosophy: Threads of Connection</h2>
+                    <div class="about-content">
+                        <p>Wearing Our Identity</p>
+                        <p>We believe clothing is more than protection. It is identity. For those far from home, apparel becomes a bridge—connecting past to present, homeland to horizon.</p>
+                        <p>Each stitch carries a story. Each pattern speaks of roots, of belonging, of journeys taken and memories preserved. Our garments are not simply made. They are crafted as vessels of culture, designed to carry your heritage wherever you go.</p>
+                        <p>We understand that true connection transcends geography. It lives in the fabric of who we are. Rigden is not just a brand. We are a testament to the enduring power of cultural identity—woven, worn, and celebrated.</p>
+                    </div>
+                </div>
+            </section>
         </div>
     </section>
+
     
     <footer id="contact">
         <div class="container">
