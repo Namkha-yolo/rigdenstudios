@@ -674,6 +674,23 @@
         </div>
     </footer>
 
+    <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+  import { getAuth }       from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+  import { getFunctions }  from "https://www.gstatic.com/firebasejs/9.22.2/firebase-functions.js";
+
+  const firebaseConfig = {
+    apiKey:    import.meta.env.FIREBASE_API_KEY,
+    authDomain:import.meta.env.FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.FIREBASE_PROJECT_ID,
+    // …
+  };
+  const app = initializeApp(firebaseConfig);
+  const auth      = getAuth(app);
+  const functions = getFunctions(app);
+</script>
+<script src="js/main.js"></script>
+
     <!-- Include cart functionality -->
     <script src="js/supabase.js"></script>
     <script src="js/cart.js"></script>
