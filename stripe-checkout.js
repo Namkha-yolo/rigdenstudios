@@ -2,7 +2,7 @@
 // You'll need to set up a backend server to handle Stripe payments securely
 
 const express = require('express');
-const stripe = require('stripe')(pk_live_51RUFuuFzt6L3gDtlnGdmjjZKZeWww1d3Jl0LbyFDPB2uuRzXQGgm9yCqB86RAlWaViOk0QerDX4DPYoVI5kOXBcu00rQrgWqK7); // Replace with your secret key
+const stripe = require('stripe')(); // Replace with your secret key
 const cors = require('cors');
 
 const app = express();
@@ -96,6 +96,28 @@ app.post('/webhook', express.raw({type: 'application/json'}), async (req, res) =
 
 app.listen(3000, () => {
     console.log('Server running on port 3000');
+});
+
+require('dotenv').config();
+const express = require('express');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const cors = require('cors');
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// Update these URLs with your GitHub Pages URL
+const YOUR_DOMAIN = 'https://namkha-yolo.github.io/rigdenstudios';
+
+app.post('/create-checkout-session', async (req, res) => {
+    // ... rest of your stripe-checkout.js code ...
+    // Update success_url and cancel_url to use YOUR_DOMAIN
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
 
 // To use this:
