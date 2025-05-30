@@ -15,57 +15,214 @@
             font-family: Arial, sans-serif;
             line-height: 1.6;
             color: #333;
+            overflow-x: hidden;
         }
 
-        /* Simple navbar */
+        /* Navbar */
         .navbar {
-            background: #000;
+            background: rgba(0, 0, 0, 0.9);
             color: #fff;
-            padding: 1rem;
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
         }
 
-        .navbar a {
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
             color: #fff;
             text-decoration: none;
-            margin-right: 1rem;
+            transition: opacity 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
         }
 
-        /* Hero section */
-        .hero {
-            background: #333;
-            color: #fff;
-            padding: 4rem 1rem;
+        .nav-links a:hover {
+            opacity: 0.7;
+        }
+
+        /* Video Hero Section */
+        .video-hero {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-background {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: -2;
+            object-fit: cover;
+        }
+
+        /* Dark overlay for better text visibility */
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        .hero-content {
             text-align: center;
-            min-height: 400px;
+            color: #fff;
+            z-index: 1;
+            padding: 0 2rem;
+            animation: fadeInUp 1.5s ease-out;
         }
 
-        .hero h1 {
-            font-size: 2.5rem;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
             margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 1px;
         }
 
         .btn {
             display: inline-block;
-            padding: 1rem 2rem;
+            padding: 1rem 3rem;
             background: #fff;
             color: #000;
             text-decoration: none;
             font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            border: 2px solid #fff;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator::before {
+            content: '↓';
+            color: #fff;
+            font-size: 2rem;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
         }
 
         /* Features section */
         .features {
-            padding: 3rem 1rem;
-            text-align: center;
+            padding: 5rem 2rem;
+            background: #f8f8f8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .features h2 {
-            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 2rem;
+            background: #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .feature p {
+            color: #666;
+            line-height: 1.8;
         }
 
         /* Footer */
@@ -73,32 +230,98 @@
             background: #000;
             color: #fff;
             text-align: center;
-            padding: 2rem;
+            padding: 3rem;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-content p {
+                font-size: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .features h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Fallback for when video is loading */
+        .video-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: -3;
         }
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar">
-        <strong>RIGDEN STUDIOS</strong>
-        <a href="index.html">Home</a>
-        <a href="products.html">Products</a>
-        <a href="checkout.html">Cart</a>
+        <div class="nav-container">
+            <div class="logo">RIGDEN STUDIOS</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="checkout.html">Cart</a>
+            </div>
+        </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>Premium Hoodies for Modern Lifestyle</h1>
-        <p>Comfort meets style in our exclusive collection</p>
-        <a href="products.html" class="btn">SHOP NOW</a>
+    <!-- Video Hero Section -->
+    <section class="video-hero">
+        <!-- Video Background -->
+        <video autoplay muted loop playsinline class="video-background">
+            <!-- Add your video sources here -->
+            <source src="your-video.mp4" type="video/mp4">
+            <source src="your-video.webm" type="video/webm">
+            <!-- Fallback for browsers that don't support video -->
+            Your browser does not support the video tag.
+        </video>
+        
+        <!-- Dark overlay -->
+        <div class="video-overlay"></div>
+        
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <h1>Premium Hoodies</h1>
+            <p>Comfort meets style in our exclusive collection</p>
+            <a href="products.html" class="btn">Shop Now</a>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator"></div>
     </section>
 
     <!-- Features Section -->
     <section class="features">
-        <h2>Why Choose Rigden Studios</h2>
-        <p><strong>Premium Quality</strong><br>Made from 100% organic cotton</p>
-        <p><strong>Unique Designs</strong><br>Limited edition designs</p>
-        <p><strong>Sustainable</strong><br>Eco-friendly production</p>
+        <div class="container">
+            <h2>Why Choose Rigden Studios</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <h3>Premium Quality</h3>
+                    <p>Made from 100% organic cotton with attention to every detail. Our hoodies are built to last.</p>
+                </div>
+                <div class="feature">
+                    <h3>Unique Designs</h3>
+                    <p>Limited edition designs that stand out from the crowd. Express yourself with style.</p>
+                </div>
+                <div class="feature">
+                    <h3>Sustainable</h3>
+                    <p>Eco-friendly production with minimal environmental impact. Fashion with a conscience.</p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Footer -->
