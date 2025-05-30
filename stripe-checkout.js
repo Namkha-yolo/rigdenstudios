@@ -2,7 +2,7 @@
 // You'll need to set up a backend server to handle Stripe payments securely
 
 const express = require('express');
-const stripe = require('stripe')('YOUR_STRIPE_SECRET_KEY'); // Replace with your secret key
+const stripe = require('stripe')(pk_live_51RUFuuFzt6L3gDtlnGdmjjZKZeWww1d3Jl0LbyFDPB2uuRzXQGgm9yCqB86RAlWaViOk0QerDX4DPYoVI5kOXBcu00rQrgWqK7); // Replace with your secret key
 const cors = require('cors');
 
 const app = express();
