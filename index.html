@@ -3,15 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rigden Studios – Premium Hoodies</title>
+  <title>Rigden Studios – Premium Hoodies</title>
+  <!-- Link to our unified CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- ===========================
-       FULL‑VIEWPORT HERO SECTION
-       =========================== -->
+  <!-- NAVBAR (shared across all pages) -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">RIGDEN STUDIOS</div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="checkout.html">Cart</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION (full viewport + looping video) -->
   <div class="hero">
-    <!-- 1) Background video (ensure vid-bg.mp4 is in img/) -->
     <video
       class="hero-video"
       autoplay
@@ -21,70 +31,52 @@
       poster="img/vid-poster.jpg"
     >
       <source src="img/vid-bg.mp4" type="video/mp4" />
-      <!-- If you have a WebM fallback, you can uncomment this:
-      <source src="img/vid-bg.webm" type="video/webm" />
-      -->
+      <!-- <source src="img/vid-bg.webm" type="video/webm" /> -->
       Your browser doesn’t support the video tag.
     </video>
 
-    <!-- 2) Semi‑transparent overlay on top of the video -->
     <div class="hero-overlay"></div>
 
-    <!-- 3) Navbar (fixed atop the video) -->
-    <nav class="navbar">
-      <div class="nav-container">
-        <div class="logo">RIGDEN STUDIOS</div>
-        <div class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="products.html">Products</a>
-          <a href="checkout.html">Cart</a>
-        </div>
-      </div>
-    </nav>
-
-    <!-- 4) Centered hero content (text + button) -->
     <div class="hero-content">
-      <h1>Premium Hoodies</h1>
+      <h1>Premium Hoodies</h1>
       <p>Comfort meets style in our exclusive collection</p>
-      <a href="products.html" class="btn">Shop Now</a>
+      <a href="products.html" class="btn">Shop Now</a>
     </div>
   </div>
 
-  <!-- ==================================
-       FEATURES SECTION (Below the fold)
-       ================================== -->
-  <section class="features">
-    <div class="container">
-      <h2>Why Choose Rigden Studios</h2>
-      <div class="features-grid">
-        <div class="feature">
-          <h3>Premium Quality</h3>
-          <p>
-            Made from 100% organic cotton with attention to every detail. Our
-            hoodies are built to last.
-          </p>
-        </div>
-        <div class="feature">
-          <h3>Unique Designs</h3>
-          <p>
-            Limited edition designs that stand out from the crowd. Express
-            yourself with style.
-          </p>
-        </div>
-        <div class="feature">
-          <h3>Sustainable</h3>
-          <p>
-            Eco‑friendly production with minimal environmental impact. Fashion
-            with a conscience.
-          </p>
+  <!-- BELOW THE FOLD: FEATURES SECTION (optional) -->
+  <main>
+    <section class="features">
+      <div class="container">
+        <h2>Why Choose Rigden Studios</h2>
+        <div class="features-grid">
+          <div class="feature">
+            <h3>Premium Quality</h3>
+            <p>
+              Made from 100% organic cotton with attention to every detail. Our
+              hoodies are built to last.
+            </p>
+          </div>
+          <div class="feature">
+            <h3>Unique Designs</h3>
+            <p>
+              Limited edition designs that stand out from the crowd. Express
+              yourself with style.
+            </p>
+          </div>
+          <div class="feature">
+            <h3>Sustainable</h3>
+            <p>
+              Eco‑friendly production with minimal environmental impact.
+              Fashion with a conscience.
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <!-- ==========
-       FOOTER
-       ========== -->
+  <!-- FOOTER (shared across all pages) -->
   <footer class="footer">
     <p>&copy; 2024 Rigden Studios. All rights reserved.</p>
   </footer>
