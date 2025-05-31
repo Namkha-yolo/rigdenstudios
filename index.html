@@ -1,138 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Rigden Studios</title>
-  <style>
-    /* RESET */
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
-    /* HERO WRAPPER */
-    .hero {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    /* BACKGROUND VIDEO */
-    .hero video {
-      position: absolute;
-      top: 50%; left: 50%;
-      width: auto; height: auto;
-      min-width: 100%; min-height: 100%;
-      transform: translate(-50%, -50%);
-      object-fit: cover;
-      z-index: -1;
-    }
-
-    /* DARK OVERLAY */
-    .hero::before {
-      content: '';
-      position: absolute;
-      top:0; left:0;
-      width:100%; height:100%;
-      background: rgba(0,0,0,0.4);
-      z-index: 0;
-    }
-
-    /* NAVBAR */
-    nav {
-      position: absolute;
-      top:0; left:0;
-      width:100%;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1;
-    }
-    nav .logo {
-      color: #fff;
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-    nav .links a {
-      color: #fff;
-      margin-left: 1.5rem;
-      text-decoration: none;
-      text-transform: uppercase;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
-      transition: opacity .3s;
-    }
-    nav .links a:hover { opacity: .7; }
-
-    /* HERO CONTENT */
-    .hero-content {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      color: #fff;
-      z-index: 1;
-      animation: fadeInUp 1.2s ease-out;
-    }
-    .hero-content h1 {
-      font-size: 3rem;
-      letter-spacing: 2px;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-    }
-    .hero-content p {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-      font-weight: 300;
-    }
-    .hero-content .btn {
-      padding: 1rem 2.5rem;
-      background: #fff;
-      color: #000;
-      text-decoration: none;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      border: 2px solid #fff;
-      transition: transform .3s, background .3s, color .3s;
-    }
-    .hero-content .btn:hover {
-      background: transparent;
-      color: #fff;
-      transform: scale(1.05);
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translate(-50%, -40%); }
-      to   { opacity: 1; transform: translate(-50%, -50%); }
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rigden Studios – Premium Hoodies</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
+  <!-- ===========================
+       FULL‑VIEWPORT HERO SECTION
+       =========================== -->
   <div class="hero">
-    <!-- 1) Make sure your file is actually at img/vid-bg.mp4! -->
-    <video autoplay muted loop playsinline>
-      <source src="img/vid-bg.mp4" type="video/mp4">
-      <!-- optional WebM: <source src="img/vid-bg.webm" type="video/webm"> -->
-      Your browser doesn’t support video.
+    <!-- 1) Background video (ensure vid-bg.mp4 is in img/) -->
+    <video
+      class="hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster="img/vid-poster.jpg"
+    >
+      <source src="img/vid-bg.mp4" type="video/mp4" />
+      <!-- If you have a WebM fallback, you can uncomment this:
+      <source src="img/vid-bg.webm" type="video/webm" />
+      -->
+      Your browser doesn’t support the video tag.
     </video>
 
-    <nav>
-      <div class="logo">RIGDEN STUDIOS</div>
-      <div class="links">
-        <a href="#">Home</a>
-        <a href="#">Products</a>
-        <a href="#">Cart</a>
+    <!-- 2) Semi‑transparent overlay on top of the video -->
+    <div class="hero-overlay"></div>
+
+    <!-- 3) Navbar (fixed atop the video) -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">RIGDEN STUDIOS</div>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="products.html">Products</a>
+          <a href="checkout.html">Cart</a>
+        </div>
       </div>
     </nav>
 
+    <!-- 4) Centered hero content (text + button) -->
     <div class="hero-content">
-      <h1>Premium Hoodies</h1>
+      <h1>Premium Hoodies</h1>
       <p>Comfort meets style in our exclusive collection</p>
-      <a href="products.html" class="btn">Shop Now</a>
+      <a href="products.html" class="btn">Shop Now</a>
     </div>
   </div>
 
+  <!-- ==================================
+       FEATURES SECTION (Below the fold)
+       ================================== -->
+  <section class="features">
+    <div class="container">
+      <h2>Why Choose Rigden Studios</h2>
+      <div class="features-grid">
+        <div class="feature">
+          <h3>Premium Quality</h3>
+          <p>
+            Made from 100% organic cotton with attention to every detail. Our
+            hoodies are built to last.
+          </p>
+        </div>
+        <div class="feature">
+          <h3>Unique Designs</h3>
+          <p>
+            Limited edition designs that stand out from the crowd. Express
+            yourself with style.
+          </p>
+        </div>
+        <div class="feature">
+          <h3>Sustainable</h3>
+          <p>
+            Eco‑friendly production with minimal environmental impact. Fashion
+            with a conscience.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========
+       FOOTER
+       ========== -->
+  <footer class="footer">
+    <p>&copy; 2024 Rigden Studios. All rights reserved.</p>
+  </footer>
 </body>
 </html>
