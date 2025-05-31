@@ -1,299 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products - Rigden Studios</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
-
-        .navbar {
-            background: #000;
-            color: #fff;
-            padding: 1rem 2rem;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            transition: opacity 0.3s;
-        }
-
-        .nav-links a:hover {
-            opacity: 0.8;
-        }
-
-        .products-section {
-            margin-top: 80px;
-            padding: 2rem;
-            min-height: calc(100vh - 160px);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .product-card {
-            background: #fff;
-            border: 1px solid #ddd;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-
-        .product-image {
-            width: 100%;
-            height: 300px;
-            background: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-        }
-
-        .product-info {
-            padding: 1.5rem;
-        }
-
-        .product-title {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-price {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #000;
-            margin-bottom: 1rem;
-        }
-
-        .size-selector {
-            margin-bottom: 1rem;
-        }
-
-        .size-selector label {
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .size-selector select {
-            width: 100%;
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-            font-size: 1rem;
-        }
-
-        .add-to-cart {
-            width: 100%;
-            padding: 1rem;
-            background: #000;
-            color: #fff;
-            border: none;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .add-to-cart:hover {
-            background: #333;
-        }
-
-        .footer {
-            background: #000;
-            color: #fff;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-        }
-
-        .cart-notification {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            background: #4CAF50;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 4px;
-            display: none;
-            z-index: 1000;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Products - Rigden Studios</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">RIGDEN STUDIOS</div>
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="products.html">Products</a>
-                <a href="checkout.html">Cart (<span id="cart-count">0</span>)</a>
-            </div>
-        </div>
-    </nav>
-
-    <div class="cart-notification" id="cart-notification">
-        Item added to cart!
+  <!-- NAVBAR (shared) -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">RIGDEN STUDIOS</div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="checkout.html">Cart (<span id="cart-count">0</span>)</a>
+      </div>
     </div>
+  </nav>
 
+  <!-- PRODUCTS SECTION -->
+  <main>
     <section class="products-section">
-        <div class="container">
-            <h1>Our Hoodies</h1>
-            <div class="products-grid" id="products-grid">
-                <!-- Products will be dynamically loaded here -->
-            </div>
+      <div class="container">
+        <h1>Our Hoodies</h1>
+        <div class="products-grid" id="products-grid">
+          <!-- JavaScript will inject product cards here -->
         </div>
+      </div>
     </section>
+  </main>
 
-    <footer class="footer">
-        <p>&copy; 2024 Rigden Studios. All rights reserved.</p>
-    </footer>
+  <!-- CART NOTIFICATION (hidden by default) -->
+  <div class="cart-notification" id="cart-notification">
+    Item added to cart!
+  </div>
 
-    <script>
-        // Product data
-        const products = [
-            {
-                id: 1,
-                name: "Classic Black Hoodie",
-                price: 79.99,
-                image: "hoodie-black.jpg"
-            },
-            {
-                id: 2,
-                name: "Signature Gray Hoodie",
-                price: 79.99,
-                image: "hoodie-gray.jpg"
-            },
-            {
-                id: 3,
-                name: "Limited Edition White",
-                price: 89.99,
-                image: "hoodie-white.jpg"
-            },
-            {
-                id: 4,
-                name: "Urban Navy Hoodie",
-                price: 84.99,
-                image: "hoodie-navy.jpg"
-            }
-        ];
+  <!-- FOOTER (shared) -->
+  <footer class="footer">
+    <p>&copy; 2024 Rigden Studios. All rights reserved.</p>
+  </footer>
 
-        // Initialize cart from localStorage or empty array
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  <!-- SCRIPTS: inject product data & handle cart logic -->
+  <script>
+    // Product data
+    const products = [
+      {
+        id: 1,
+        name: "Classic Black Hoodie",
+        price: 79.99,
+        image: "hoodie-black.jpg"
+      },
+      {
+        id: 2,
+        name: "Signature Gray Hoodie",
+        price: 79.99,
+        image: "hoodie-gray.jpg"
+      },
+      {
+        id: 3,
+        name: "Limited Edition White",
+        price: 89.99,
+        image: "hoodie-white.jpg"
+      },
+      {
+        id: 4,
+        name: "Urban Navy Hoodie",
+        price: 84.99,
+        image: "hoodie-navy.jpg"
+      }
+    ];
 
-        // Update cart count on page load
-        updateCartCount();
+    // Initialize cart from localStorage or empty array
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-        // Render products
-        function renderProducts() {
-            const productsGrid = document.getElementById('products-grid');
-            
-            products.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.className = 'product-card';
-                productCard.innerHTML = `
-                    <div class="product-image">
-                        ${product.name}
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">${product.name}</h3>
-                        <p class="product-price">$${product.price}</p>
-                        <div class="size-selector">
-                            <label for="size-${product.id}">Size:</label>
-                            <select id="size-${product.id}">
-                                <option value="S">Small</option>
-                                <option value="M">Medium</option>
-                                <option value="L">Large</option>
-                                <option value="XL">X-Large</option>
-                            </select>
-                        </div>
-                        <button class="add-to-cart" onclick="addToCart(${product.id})">
-                            ADD TO CART
-                        </button>
-                    </div>
-                `;
-                productsGrid.appendChild(productCard);
-            });
-        }
+    // Update cart count in navbar
+    function updateCartCount() {
+      document.getElementById("cart-count").textContent = cart.length;
+    }
 
-        // Add to cart function
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            const sizeSelect = document.getElementById(`size-${productId}`);
-            const selectedSize = sizeSelect.value;
-            
-            const cartItem = {
-                ...product,
-                size: selectedSize,
-                quantity: 1,
-                cartId: Date.now() // Unique identifier for cart items
-            };
-            
-            cart.push(cartItem);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartCount();
-            showNotification();
-        }
+    // Show notification when item is added
+    function showNotification() {
+      const notification = document.getElementById("cart-notification");
+      notification.style.display = "block";
+      setTimeout(() => {
+        notification.style.display = "none";
+      }, 2000);
+    }
 
-        // Update cart count
-        function updateCartCount() {
-            document.getElementById('cart-count').textContent = cart.length;
-        }
+    // Add product to cart
+    function addToCart(productId) {
+      const product = products.find((p) => p.id === productId);
+      const sizeSelect = document.getElementById(`size-${productId}`);
+      const selectedSize = sizeSelect.value;
 
-        // Show notification
-        function showNotification() {
-            const notification = document.getElementById('cart-notification');
-            notification.style.display = 'block';
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 2000);
-        }
+      const cartItem = {
+        ...product,
+        size: selectedSize,
+        quantity: 1,
+        cartId: Date.now() // Unique identifier
+      };
 
-        // Render products on page load
-        renderProducts();
-    </script>
+      cart.push(cartItem);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+      showNotification();
+    }
+
+    // Render product cards on page load
+    function renderProducts() {
+      const productsGrid = document.getElementById("products-grid");
+
+      products.forEach((product) => {
+        const card = document.createElement("div");
+        card.className = "product-card";
+
+        card.innerHTML = `
+          <div class="product-image">
+            ${product.name}
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">${product.name}</h3>
+            <p class="product-price">$${product.price.toFixed(2)}</p>
+            <div class="size-selector">
+              <label for="size-${product.id}">Size:</label>
+              <select id="size-${product.id}">
+                <option value="S">Small</option>
+                <option value="M">Medium</option>
+                <option value="L">Large</option>
+                <option value="XL">X-Large</option>
+              </select>
+            </div>
+            <button class="add-to-cart" onclick="addToCart(${product.id})">
+              ADD TO CART
+            </button>
+          </div>
+        `;
+
+        productsGrid.appendChild(card);
+      });
+    }
+
+    // Initialize on load
+    updateCartCount();
+    renderProducts();
+  </script>
 </body>
 </html>
