@@ -1,0 +1,245 @@
+/* =========================================
+   RESET & GLOBAL STYLES
+   ========================================= */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* Standard link reset */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Utility container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* =========================================
+   HERO SECTION (FULL‑VIEWPORT)
+   ========================================= */
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 1) Video: centered, full‑viewport, behind everything */
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: 0; /* behind overlay & content */
+}
+
+/* 2) Overlay: semi‑transparent black to ensure text contrast */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+/* =========================================
+   NAVBAR (POSITIONED OVER VIDEO)
+   ========================================= */
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2; /* above overlay */
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.nav-links a {
+  margin-left: 2rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: opacity 0.3s;
+  color: #fff;
+}
+
+.nav-links a:hover {
+  opacity: 0.7;
+}
+
+/* =========================================
+   HERO CONTENT (CENTERED OVERLAY)
+   ========================================= */
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2; /* above overlay & video */
+  animation: fadeInUp 1.2s ease-out;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+
+.hero-content .btn {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background: #fff;
+  color: #000;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 2px solid #fff;
+  transition: background 0.3s, color 0.3s, transform 0.3s;
+}
+
+.hero-content .btn:hover {
+  background: transparent;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+/* Fade‑in animation for hero text */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* =========================================
+   FEATURES SECTION (OPTIONAL, BELOW FOLD)
+   ========================================= */
+.features {
+  background: #f8f8f8;
+  color: #333;
+  padding: 5rem 0;
+}
+
+.features h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #333;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.feature {
+  background: #fff;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.feature:hover {
+  transform: translateY(-10px);
+}
+
+.feature h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #333;
+}
+
+.feature p {
+  line-height: 1.8;
+  color: #666;
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+.footer {
+  background: #000;
+  color: #fff;
+  text-align: center;
+  padding: 3rem 2rem;
+  font-size: 0.9rem;
+}
+
+/* =========================================
+   RESPONSIVE (MOBILE) 
+   ========================================= */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  .hero-content p {
+    font-size: 1rem;
+  }
+  .nav-links a {
+    margin-left: 1rem;
+    font-size: 0.8rem;
+  }
+  .features h2 {
+    font-size: 2rem;
+  }
+}
+
