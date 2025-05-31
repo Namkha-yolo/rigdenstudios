@@ -1,321 +1,453 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Checkout - Rigden Studios</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Rigden Studios</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-  <!-- NAVBAR (shared) -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <div class="logo">RIGDEN STUDIOS</div>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="products.html">Products</a>
-        <a href="checkout.html">Cart</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- CHECKOUT CONTENT -->
-  <main>
-    <div class="checkout-container">
-      <!-- CUSTOMER INFO SECTION -->
-      <div class="section">
-        <h2>Customer Information</h2>
-        <div class="success-message" id="success-message">
-          Order placed successfully! Redirecting to payment...
-        </div>
-        <form id="checkout-form">
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required />
-            <div class="error" id="email-error"></div>
-          </div>
-
-          <div class="form-group">
-            <label for="firstName">First Name</label>
-            <input type="text" id="firstName" name="firstName" required />
-            <div class="error" id="firstName-error"></div>
-          </div>
-
-          <div class="form-group">
-            <label for="lastName">Last Name</label>
-            <input type="text" id="lastName" name="lastName" required />
-            <div class="error" id="lastName-error"></div>
-          </div>
-
-          <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" required />
-            <div class="error" id="phone-error"></div>
-          </div>
-
-          <h3 style="margin: 2rem 0 1rem 0;">Shipping Address</h3>
-
-          <div class="form-group">
-            <label for="address">Street Address</label>
-            <input type="text" id="address" name="address" required />
-            <div class="error" id="address-error"></div>
-          </div>
-
-          <div class="form-group">
-            <label for="city">City</label>
-            <input type="text" id="city" name="city" required />
-            <div class="error" id="city-error"></div>
-          </div>
-
-          <div class="form-group">
-            <label for="state">State/Province</label>
-            <input type="text" id="state" name="state" required />
-            <div class="error" id="state-error"></div>
-          </div>
-
-          <div class="form-group">
-            <label for="zipCode">ZIP/Postal Code</label>
-            <input type="text" id="zipCode" name="zipCode" required />
-            <div class="error" id="zipCode-error"></div>
-          </div>
-
-          <div class="form-group">
-            <label for="country">Country</label>
-            <select id="country" name="country" required>
-              <option value="US">United States</option>
-              <option value="CA">Canada</option>
-              <option value="UK">United Kingdom</option>
-              <option value="AU">Australia</option>
-            </select>
-          </div>
-        </form>
-      </div>
-
-      <!-- ORDER SUMMARY SECTION -->
-      <div class="section">
-        <h2>Order Summary</h2>
-        <div id="cart-content">
-          <!-- JavaScript will inject cart items here -->
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- STRIPE & FIREBASE SCRIPTS -->
-  <script src="https://js.stripe.com/v3/"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
-
-  <!-- CHECKOUT.LOGIC.JS -->
-  <script>
-    // Initialize Firebase (replace with your actual config)
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID",
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    // Initialize Stripe (replace with your publishable key)
-    const stripe = Stripe("YOUR_STRIPE_PUBLISHABLE_KEY");
-
-    // Load cart from localStorage
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    // Display cart items in Order Summary
-    function displayCart() {
-      const cartContent = document.getElementById("cart-content");
-
-      if (cart.length === 0) {
-        cartContent.innerHTML =
-          '<div class="empty-cart">Your cart is empty. <a href="products.html">Shop now</a></div>';
-        return;
-      }
-
-      let html = '<div class="cart-items">';
-      let subtotal = 0;
-
-      cart.forEach((item, index) => {
-        html += `
-          <div class="cart-item">
-            <div class="item-details">
-              <div class="item-name">${item.name}</div>
-              <div class="item-size">Size: ${item.size}</div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>RIGDEN STUDIOS</h2>
             </div>
-            <div class="item-price">$${item.price.toFixed(2)}</div>
-            <button class="remove-btn" onclick="removeFromCart(${index})">
-              Remove
-            </button>
-          </div>
-        `;
-        subtotal += item.price;
-      });
-
-      html += "</div>";
-
-      const tax = subtotal * 0.08; // 8% tax
-      const shipping = 10; // Flat shipping rate
-      const total = subtotal + tax + shipping;
-
-      html += `
-        <div class="order-summary">
-          <div class="summary-row">
-            <span>Subtotal:</span>
-            <span>$${subtotal.toFixed(2)}</span>
-          </div>
-          <div class="summary-row">
-            <span>Tax (8%):</span>
-            <span>$${tax.toFixed(2)}</span>
-          </div>
-          <div class="summary-row">
-            <span>Shipping:</span>
-            <span>$${shipping.toFixed(2)}</span>
-          </div>
-          <div class="summary-row total">
-            <span>Total:</span>
-            <span>$${total.toFixed(2)}</span>
-          </div>
-          <button class="checkout-btn" onclick="processCheckout()" id="checkout-btn">
-            Proceed to Payment
-          </button>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="products.html" class="nav-link">Products</a>
+                <a href="index.html#about" class="nav-link">About</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+                <a href="checkout.html" class="nav-link cart-link active">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
-      `;
+    </nav>
 
-      cartContent.innerHTML = html;
-    }
+    <!-- Checkout Header -->
+    <section class="checkout-header">
+        <div class="container">
+            <div class="checkout-steps">
+                <div class="step active">
+                    <div class="step-number">1</div>
+                    <span>Cart Review</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step active">
+                    <div class="step-number">2</div>
+                    <span>Information</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <span>Payment</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    // Remove an item from the cart
-    function removeFromCart(index) {
-      cart.splice(index, 1);
-      localStorage.setItem("cart", JSON.stringify(cart));
-      displayCart();
-    }
+    <!-- Checkout Content -->
+    <section class="checkout-content">
+        <div class="checkout-grid">
+            <!-- Left Column - Forms -->
+            <div class="checkout-form">
+                <!-- Customer Information -->
+                <div class="form-section">
+                    <h2><i class="fas fa-user"></i> Customer Information</h2>
+                    <form id="customer-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" placeholder="John" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
+                            </div>
+                        </div>
 
-    // Validate the checkout form fields
-    function validateForm() {
-      const form = document.getElementById("checkout-form");
-      const formData = new FormData(form);
-      let isValid = true;
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" placeholder="+1 (555) 123-4567">
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
-      // Clear previous errors
-      document.querySelectorAll(".error").forEach((el) => (el.textContent = ""));
+                <!-- Shipping Address -->
+                <div class="form-section">
+                    <h2><i class="fas fa-shipping-fast"></i> Shipping Address</h2>
+                    <form id="shipping-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="address">Street Address *</label>
+                                <input type="text" id="address" name="address" placeholder="123 Main Street" required>
+                            </div>
+                        </div>
 
-      // Check required fields
-      for (let [key, value] of formData.entries()) {
-        if (!value.trim()) {
-          document.getElementById(`${key}-error`).textContent = "This field is required";
-          isValid = false;
-        }
-      }
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="apartment">Apartment, Suite, etc.</label>
+                                <input type="text" id="apartment" name="apartment" placeholder="Apt 4B">
+                            </div>
+                        </div>
 
-      // Email validation
-      const email = formData.get("email");
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (email && !emailRegex.test(email)) {
-        document.getElementById("email-error").textContent = "Please enter a valid email";
-        isValid = false;
-      }
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">City *</label>
+                                <input type="text" id="city" name="city" placeholder="New York" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State/Province *</label>
+                                <select id="state" name="state" required>
+                                    <option value="">Select State</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="CA">California</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="NY">New York</option>
+                                    <option value="TX">Texas</option>
+                                </select>
+                            </div>
+                        </div>
 
-      // Phone validation
-      const phone = formData.get("phone");
-      const phoneRegex = /^[\d\s\-\+\(\)]+$/;
-      if (phone && !phoneRegex.test(phone)) {
-        document.getElementById("phone-error").textContent = "Please enter a valid phone number";
-        isValid = false;
-      }
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="zip">ZIP/Postal Code *</label>
+                                <input type="text" id="zip" name="zip" placeholder="10001" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="country">Country *</label>
+                                <select id="country" name="country" required>
+                                    <option value="US">United States</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="AU">Australia</option>
+                                    <option value="DE">Germany</option>
+                                    <option value="FR">France</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
-      return isValid;
-    }
+                <!-- Shipping Method -->
+                <div class="form-section">
+                    <h2><i class="fas fa-truck"></i> Shipping Method</h2>
+                    <div class="shipping-options">
+                        <div class="shipping-option">
+                            <input type="radio" id="standard" name="shipping" value="standard" checked>
+                            <label for="standard">
+                                <div class="shipping-info">
+                                    <div class="shipping-name">Standard Shipping</div>
+                                    <div class="shipping-time">5-7 business days</div>
+                                </div>
+                                <div class="shipping-price">$9.99</div>
+                            </label>
+                        </div>
+                        <div class="shipping-option">
+                            <input type="radio" id="express" name="shipping" value="express">
+                            <label for="express">
+                                <div class="shipping-info">
+                                    <div class="shipping-name">Express Shipping</div>
+                                    <div class="shipping-time">2-3 business days</div>
+                                </div>
+                                <div class="shipping-price">$19.99</div>
+                            </label>
+                        </div>
+                        <div class="shipping-option">
+                            <input type="radio" id="overnight" name="shipping" value="overnight">
+                            <label for="overnight">
+                                <div class="shipping-info">
+                                    <div class="shipping-name">Overnight Shipping</div>
+                                    <div class="shipping-time">Next business day</div>
+                                </div>
+                                <div class="shipping-price">$29.99</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
-    // Process checkout: save to Firebase + create Stripe session + redirect
-    async function processCheckout() {
-      if (cart.length === 0) {
-        alert("Your cart is empty");
-        return;
-      }
+                <!-- Payment Method -->
+                <div class="form-section">
+                    <h2><i class="fas fa-credit-card"></i> Payment Method</h2>
+                    <div class="payment-methods">
+                        <div class="payment-option">
+                            <input type="radio" id="credit-card" name="payment" value="credit-card" checked>
+                            <label for="credit-card">
+                                <i class="fas fa-credit-card"></i>
+                                Credit / Debit Card
+                            </label>
+                        </div>
+                        <div class="payment-option">
+                            <input type="radio" id="paypal" name="payment" value="paypal">
+                            <label for="paypal">
+                                <i class="fab fa-paypal"></i>
+                                PayPal
+                            </label>
+                        </div>
+                        <div class="payment-option">
+                            <input type="radio" id="apple-pay" name="payment" value="apple-pay">
+                            <label for="apple-pay">
+                                <i class="fab fa-apple"></i>
+                                Apple Pay
+                            </label>
+                        </div>
+                        <div class="payment-option">
+                            <input type="radio" id="google-pay" name="payment" value="google-pay">
+                            <label for="google-pay">
+                                <i class="fab fa-google"></i>
+                                Google Pay
+                            </label>
+                        </div>
+                    </div>
 
-      if (!validateForm()) {
-        alert("Please fill in all required fields correctly");
-        return;
-      }
+                    <!-- Credit Card Details -->
+                    <div class="credit-card-form" id="credit-card-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="card-number">Card Number *</label>
+                                <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+                                <div class="card-icons">
+                                    <i class="fab fa-cc-visa"></i>
+                                    <i class="fab fa-cc-mastercard"></i>
+                                    <i class="fab fa-cc-amex"></i>
+                                    <i class="fab fa-cc-discover"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="card-name">Name on Card *</label>
+                                <input type="text" id="card-name" name="card-name" placeholder="John Doe">
+                            </div>
+                        </div>
 
-      const checkoutBtn = document.getElementById("checkout-btn");
-      checkoutBtn.disabled = true;
-      checkoutBtn.textContent = "Processing...";
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="expiry">Expiry Date *</label>
+                                <input type="text" id="expiry" name="expiry" placeholder="MM/YY" maxlength="5">
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV *</label>
+                                <input type="text" id="cvv" name="cvv" placeholder="123" maxlength="4">
+                                <div class="cvv-help">
+                                    <i class="fas fa-question-circle"></i>
+                                    <span>3-4 digits on back of card</span>
+                                </div>
+                            </div>
+                        </div>
 
-      try {
-        // Get form data
-        const form = document.getElementById("checkout-form");
-        const formData = new FormData(form);
+                        <div class="form-row">
+                            <div class="form-group checkbox-group">
+                                <input type="checkbox" id="billing-same" name="billing-same" checked>
+                                <label for="billing-same">Billing address same as shipping</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        // Calculate totals
-        const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
-        const tax = subtotal * 0.08;
-        const shipping = 10;
-        const total = subtotal + tax + shipping;
+            <!-- Right Column - Order Summary -->
+            <div class="order-summary">
+                <div class="summary-card">
+                    <h2><i class="fas fa-receipt"></i> Order Summary</h2>
+                    
+                    <!-- Cart Items -->
+                    <div class="cart-items" id="cart-items">
+                        <!-- Sample cart item -->
+                        <div class="cart-item">
+                            <div class="cart-item-image">
+                                <img src="img/hoodie-1.jpg" alt="Classic Black Hoodie">
+                            </div>
+                            <div class="cart-item-info">
+                                <div class="cart-item-name">Classic Black Hoodie</div>
+                                <div class="cart-item-details">Size: L, Color: Black</div>
+                                <div class="cart-item-quantity">Qty: 1</div>
+                            </div>
+                            <div class="cart-item-price">$89.99</div>
+                        </div>
+                    </div>
 
-        // Prepare order data
-        const orderData = {
-          customer: {
-            email: formData.get("email"),
-            firstName: formData.get("firstName"),
-            lastName: formData.get("lastName"),
-            phone: formData.get("phone"),
-          },
-          shipping: {
-            address: formData.get("address"),
-            city: formData.get("city"),
-            state: formData.get("state"),
-            zipCode: formData.get("zipCode"),
-            country: formData.get("country"),
-          },
-          items: cart,
-          totals: {
-            subtotal: subtotal,
-            tax: tax,
-            shipping: shipping,
-            total: total,
-          },
-          status: "pending",
-          createdAt: new Date().toISOString(),
+                    <!-- Promo Code -->
+                    <div class="promo-code">
+                        <div class="promo-input">
+                            <input type="text" id="promo" placeholder="Enter promo code">
+                            <button type="button" class="btn btn-outline" onclick="applyPromo()">Apply</button>
+                        </div>
+                    </div>
+
+                    <!-- Order Totals -->
+                    <div class="order-totals">
+                        <div class="total-row">
+                            <span>Subtotal</span>
+                            <span id="subtotal">$89.99</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Shipping</span>
+                            <span id="shipping-cost">$9.99</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Tax</span>
+                            <span id="tax">$8.10</span>
+                        </div>
+                        <div class="total-row discount-row" id="discount-row" style="display: none;">
+                            <span>Discount</span>
+                            <span id="discount">-$0.00</span>
+                        </div>
+                        <div class="total-row total">
+                            <span>Total</span>
+                            <span id="total">$108.08</span>
+                        </div>
+                    </div>
+
+                    <!-- Place Order Button -->
+                    <button class="btn btn-primary btn-full place-order" id="place-order" onclick="placeOrder()">
+                        <i class="fas fa-lock"></i>
+                        Place Secure Order
+                    </button>
+
+                    <!-- Security Info -->
+                    <div class="security-info">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Your payment information is secure and encrypted with SSL</span>
+                    </div>
+
+                    <!-- Additional Info -->
+                    <div class="additional-info">
+                        <div class="info-item">
+                            <i class="fas fa-undo"></i>
+                            <span>30-day return policy</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-shipping-fast"></i>
+                            <span>Free returns on all orders</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-headset"></i>
+                            <span>24/7 customer support</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fas fa-check-circle success-icon"></i>
+                <h2>Order Placed Successfully!</h2>
+            </div>
+            <div class="modal-body">
+                <p>Thank you for your order! We've sent a confirmation email with your order details.</p>
+                <div class="order-details">
+                    <p><strong>Order Number:</strong> <span id="order-number">RS-2025-001234</span></p>
+                    <p><strong>Estimated Delivery:</strong> <span id="delivery-date">January 15, 2025</span></p>
+                </div>
+                <p>You can track your order status in your account or via the tracking link in your email.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="window.location.href='products.html'">
+                    Continue Shopping
+                </button>
+                <button class="btn btn-primary" onclick="window.location.href='index.html'">
+                    Back to Home
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>RIGDEN STUDIOS</h3>
+                    <p>Premium hoodies crafted with care and attention to detail.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> hello@rigdenstudios.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-map-marker-alt"></i> New York, NY</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Rigden Studios. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // Your Firebase configuration (replace with your actual config)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
 
-        // Save to Firebase Firestore
-        const docRef = await db.collection("orders").add(orderData);
-        console.log("Order saved with ID:", docRef.id);
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-        // Create Stripe checkout session
-        // Replace YOUR_BACKEND_URL with your actual backend endpoint
-        const response = await fetch("YOUR_BACKEND_URL/create-checkout-session", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            items: cart,
-            customerInfo: orderData.customer,
-            orderId: docRef.id,
-          }),
-        });
-
-        const { url } = await response.json();
-
-        // Redirect to Stripe hosted checkout
-        window.location.href = url;
-      } catch (error) {
-        console.error("Error processing order:", error);
-        alert("There was an error processing your order. Please try again.");
-        checkoutBtn.disabled = false;
-        checkoutBtn.textContent = "Proceed to Payment";
-      }
-    }
-
-    // Initialize cart display on load
-    displayCart();
-  </script>
+        // Make Firebase available globally
+        window.db = db;
+        window.collection = collection;
+        window.addDoc = addDoc;
+        window.serverTimestamp = serverTimestamp;
+    </script>
+    <script src="script.js"></script>
 </body>
 </html>
