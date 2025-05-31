@@ -1,462 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - Rigden Studios</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f8f8f8;
-        }
-
-        .navbar {
-            background: #000;
-            color: #fff;
-            padding: 1rem 2rem;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            transition: opacity 0.3s;
-        }
-
-        .nav-links a:hover {
-            opacity: 0.8;
-        }
-
-        .checkout-container {
-            margin-top: 80px;
-            padding: 2rem;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        @media (max-width: 768px) {
-            .checkout-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .section {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        h2 {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #eee;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-
-        .cart-items {
-            margin-bottom: 2rem;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            border-bottom: 1px solid #eee;
-        }
-
-        .cart-item:last-child {
-            border-bottom: none;
-        }
-
-        .item-details {
-            flex: 1;
-        }
-
-        .item-name {
-            font-weight: bold;
-            margin-bottom: 0.25rem;
-        }
-
-        .item-size {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .item-price {
-            font-weight: bold;
-        }
-
-        .remove-btn {
-            background: #ff4444;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            border-radius: 4px;
-            margin-left: 1rem;
-        }
-
-        .remove-btn:hover {
-            background: #cc0000;
-        }
-
-        .order-summary {
-            border-top: 2px solid #000;
-            padding-top: 1rem;
-            margin-top: 1rem;
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-
-        .summary-row.total {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-top: 1rem;
-        }
-
-        .checkout-btn {
-            width: 100%;
-            padding: 1rem;
-            background: #000;
-            color: #fff;
-            border: none;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 4px;
-            margin-top: 1rem;
-        }
-
-        .checkout-btn:hover {
-            background: #333;
-        }
-
-        .checkout-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-
-        .empty-cart {
-            text-align: center;
-            padding: 3rem;
-            color: #666;
-        }
-
-        .error {
-            color: #ff0000;
-            font-size: 0.9rem;
-            margin-top: 0.25rem;
-        }
-
-        .success-message {
-            background: #4CAF50;
-            color: white;
-            padding: 1rem;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-            display: none;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Checkout - Rigden Studios</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">RIGDEN STUDIOS</div>
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="products.html">Products</a>
-                <a href="checkout.html">Cart</a>
-            </div>
-        </div>
-    </nav>
-
-    <div class="checkout-container">
-        <!-- Customer Information -->
-        <div class="section">
-            <h2>Customer Information</h2>
-            <div class="success-message" id="success-message">
-                Order placed successfully! Redirecting to payment...
-            </div>
-            <form id="checkout-form">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                    <div class="error" id="email-error"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="firstName">First Name</label>
-                    <input type="text" id="firstName" name="firstName" required>
-                    <div class="error" id="firstName-error"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="lastName">Last Name</label>
-                    <input type="text" id="lastName" name="lastName" required>
-                    <div class="error" id="lastName-error"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" required>
-                    <div class="error" id="phone-error"></div>
-                </div>
-
-                <h3 style="margin: 2rem 0 1rem 0;">Shipping Address</h3>
-
-                <div class="form-group">
-                    <label for="address">Street Address</label>
-                    <input type="text" id="address" name="address" required>
-                    <div class="error" id="address-error"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="city">City</label>
-                    <input type="text" id="city" name="city" required>
-                    <div class="error" id="city-error"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="state">State/Province</label>
-                    <input type="text" id="state" name="state" required>
-                    <div class="error" id="state-error"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="zipCode">ZIP/Postal Code</label>
-                    <input type="text" id="zipCode" name="zipCode" required>
-                    <div class="error" id="zipCode-error"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="country">Country</label>
-                    <select id="country" name="country" required>
-                        <option value="US">United States</option>
-                        <option value="CA">Canada</option>
-                        <option value="UK">United Kingdom</option>
-                        <option value="AU">Australia</option>
-                    </select>
-                </div>
-            </form>
-        </div>
-
-        <!-- Order Summary -->
-        <div class="section">
-            <h2>Order Summary</h2>
-            <div id="cart-content">
-                <!-- Cart items will be displayed here -->
-            </div>
-        </div>
+  <!-- NAVBAR (shared) -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">RIGDEN STUDIOS</div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="checkout.html">Cart</a>
+      </div>
     </div>
+  </nav>
 
-    <!-- Stripe -->
-    <script src="https://js.stripe.com/v3/"></script>
-    
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+  <!-- CHECKOUT CONTENT -->
+  <main>
+    <div class="checkout-container">
+      <!-- CUSTOMER INFO SECTION -->
+      <div class="section">
+        <h2>Customer Information</h2>
+        <div class="success-message" id="success-message">
+          Order placed successfully! Redirecting to payment...
+        </div>
+        <form id="checkout-form">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+            <div class="error" id="email-error"></div>
+          </div>
 
-    <script>
-        // Initialize Firebase (replace with your config)
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" required />
+            <div class="error" id="firstName-error"></div>
+          </div>
 
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" required />
+            <div class="error" id="lastName-error"></div>
+          </div>
 
-        // Initialize Stripe (replace with your publishable key)
-        const stripe = Stripe('YOUR_STRIPE_PUBLISHABLE_KEY');
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" required />
+            <div class="error" id="phone-error"></div>
+          </div>
 
-        // Load cart from localStorage
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+          <h3 style="margin: 2rem 0 1rem 0;">Shipping Address</h3>
 
-        // Display cart items
-        function displayCart() {
-            const cartContent = document.getElementById('cart-content');
-            
-            if (cart.length === 0) {
-                cartContent.innerHTML = '<div class="empty-cart">Your cart is empty. <a href="products.html">Shop now</a></div>';
-                return;
-            }
+          <div class="form-group">
+            <label for="address">Street Address</label>
+            <input type="text" id="address" name="address" required />
+            <div class="error" id="address-error"></div>
+          </div>
 
-            let cartHTML = '<div class="cart-items">';
-            let subtotal = 0;
+          <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" required />
+            <div class="error" id="city-error"></div>
+          </div>
 
-            cart.forEach((item, index) => {
-                cartHTML += `
-                    <div class="cart-item">
-                        <div class="item-details">
-                            <div class="item-name">${item.name}</div>
-                            <div class="item-size">Size: ${item.size}</div>
-                        </div>
-                        <div class="item-price">$${item.price}</div>
-                        <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
-                    </div>
-                `;
-                subtotal += item.price;
-            });
+          <div class="form-group">
+            <label for="state">State/Province</label>
+            <input type="text" id="state" name="state" required />
+            <div class="error" id="state-error"></div>
+          </div>
 
-            cartHTML += '</div>';
+          <div class="form-group">
+            <label for="zipCode">ZIP/Postal Code</label>
+            <input type="text" id="zipCode" name="zipCode" required />
+            <div class="error" id="zipCode-error"></div>
+          </div>
 
-            const tax = subtotal * 0.08; // 8% tax
-            const shipping = 10; // Flat shipping rate
-            const total = subtotal + tax + shipping;
+          <div class="form-group">
+            <label for="country">Country</label>
+            <select id="country" name="country" required>
+              <option value="US">United States</option>
+              <option value="CA">Canada</option>
+              <option value="UK">United Kingdom</option>
+              <option value="AU">Australia</option>
+            </select>
+          </div>
+        </form>
+      </div>
 
-            cartHTML += `
-                <div class="order-summary">
-                    <div class="summary-row">
-                        <span>Subtotal:</span>
-                        <span>$${subtotal.toFixed(2)}</span>
-                    </div>
-                    <div class="summary-row">
-                        <span>Tax:</span>
-                        <span>$${tax.toFixed(2)}</span>
-                    </div>
-                    <div class="summary-row">
-                        <span>Shipping:</span>
-                        <span>$${shipping.toFixed(2)}</span>
-                    </div>
-                    <div class="summary-row total">
-                        <span>Total:</span>
-                        <span>$${total.toFixed(2)}</span>
-                    </div>
-                    <button class="checkout-btn" onclick="processCheckout()" id="checkout-btn">
-                        Proceed to Payment
-                    </button>
-                </div>
-            `;
+      <!-- ORDER SUMMARY SECTION -->
+      <div class="section">
+        <h2>Order Summary</h2>
+        <div id="cart-content">
+          <!-- JavaScript will inject cart items here -->
+        </div>
+      </div>
+    </div>
+  </main>
 
-            cartContent.innerHTML = cartHTML;
-        }
+  <!-- STRIPE & FIREBASE SCRIPTS -->
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
 
-        // Remove item from cart
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            displayCart();
-        }
+  <!-- CHECKOUT.LOGIC.JS -->
+  <script>
+    // Initialize Firebase (replace with your actual config)
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID",
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-        // Validate form
-        function validateForm() {
-            const form = document.getElementById('checkout-form');
-            const formData = new FormData(form);
-            let isValid = true;
+    // Initialize Stripe (replace with your publishable key)
+    const stripe = Stripe("YOUR_STRIPE_PUBLISHABLE_KEY");
 
-            // Clear previous errors
-            document.querySelectorAll('.error').forEach(el => el.textContent = '');
+    // Load cart from localStorage
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-            // Validate each field
-            for (let [key, value] of formData.entries()) {
-                if (!value.trim()) {
-                    document.getElementById(`${key}-error`).textContent = 'This field is required';
-                    isValid = false;
-                }
-            }
+    // Display cart items in Order Summary
+    function displayCart() {
+      const cartContent = document.getElementById("cart-content");
 
-            // Email validation
-            const email = formData.get('email');
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (email && !emailRegex.test(email)) {
-                document.getElementById('email-error').textContent = 'Please enter a valid email';
-                isValid = false;
-            }
-
-            // Phone validation
-            const phone = formData.get('phone');
-            const phoneRegex = /^[\d\s\-\+\(\)]+$/;
-            if (phone && !phoneRegex.test(phone)) {
-                document.getElementById('phone-error').textContent = 'Please enter a valid phone number';
-                isValid = false;
-            }
-
-            return isValid;
-        }
-
-        async function processCheckout() {
-    if (cart.length === 0) {
-        alert('Your cart is empty');
+      if (cart.length === 0) {
+        cartContent.innerHTML =
+          '<div class="empty-cart">Your cart is empty. <a href="products.html">Shop now</a></div>';
         return;
+      }
+
+      let html = '<div class="cart-items">';
+      let subtotal = 0;
+
+      cart.forEach((item, index) => {
+        html += `
+          <div class="cart-item">
+            <div class="item-details">
+              <div class="item-name">${item.name}</div>
+              <div class="item-size">Size: ${item.size}</div>
+            </div>
+            <div class="item-price">$${item.price.toFixed(2)}</div>
+            <button class="remove-btn" onclick="removeFromCart(${index})">
+              Remove
+            </button>
+          </div>
+        `;
+        subtotal += item.price;
+      });
+
+      html += "</div>";
+
+      const tax = subtotal * 0.08; // 8% tax
+      const shipping = 10; // Flat shipping rate
+      const total = subtotal + tax + shipping;
+
+      html += `
+        <div class="order-summary">
+          <div class="summary-row">
+            <span>Subtotal:</span>
+            <span>$${subtotal.toFixed(2)}</span>
+          </div>
+          <div class="summary-row">
+            <span>Tax (8%):</span>
+            <span>$${tax.toFixed(2)}</span>
+          </div>
+          <div class="summary-row">
+            <span>Shipping:</span>
+            <span>$${shipping.toFixed(2)}</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total:</span>
+            <span>$${total.toFixed(2)}</span>
+          </div>
+          <button class="checkout-btn" onclick="processCheckout()" id="checkout-btn">
+            Proceed to Payment
+          </button>
+        </div>
+      `;
+
+      cartContent.innerHTML = html;
     }
 
-    if (!validateForm()) {
-        alert('Please fill in all required fields correctly');
-        return;
+    // Remove an item from the cart
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      displayCart();
     }
 
-    const checkoutBtn = document.getElementById('checkout-btn');
-    checkoutBtn.disabled = true;
-    checkoutBtn.textContent = 'Processing...';
+    // Validate the checkout form fields
+    function validateForm() {
+      const form = document.getElementById("checkout-form");
+      const formData = new FormData(form);
+      let isValid = true;
 
-    try {
+      // Clear previous errors
+      document.querySelectorAll(".error").forEach((el) => (el.textContent = ""));
+
+      // Check required fields
+      for (let [key, value] of formData.entries()) {
+        if (!value.trim()) {
+          document.getElementById(`${key}-error`).textContent = "This field is required";
+          isValid = false;
+        }
+      }
+
+      // Email validation
+      const email = formData.get("email");
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (email && !emailRegex.test(email)) {
+        document.getElementById("email-error").textContent = "Please enter a valid email";
+        isValid = false;
+      }
+
+      // Phone validation
+      const phone = formData.get("phone");
+      const phoneRegex = /^[\d\s\-\+\(\)]+$/;
+      if (phone && !phoneRegex.test(phone)) {
+        document.getElementById("phone-error").textContent = "Please enter a valid phone number";
+        isValid = false;
+      }
+
+      return isValid;
+    }
+
+    // Process checkout: save to Firebase + create Stripe session + redirect
+    async function processCheckout() {
+      if (cart.length === 0) {
+        alert("Your cart is empty");
+        return;
+      }
+
+      if (!validateForm()) {
+        alert("Please fill in all required fields correctly");
+        return;
+      }
+
+      const checkoutBtn = document.getElementById("checkout-btn");
+      checkoutBtn.disabled = true;
+      checkoutBtn.textContent = "Processing...";
+
+      try {
         // Get form data
-        const form = document.getElementById('checkout-form');
+        const form = document.getElementById("checkout-form");
         const formData = new FormData(form);
-        
+
         // Calculate totals
         const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
         const tax = subtotal * 0.08;
@@ -465,63 +260,62 @@
 
         // Prepare order data
         const orderData = {
-            customer: {
-                email: formData.get('email'),
-                firstName: formData.get('firstName'),
-                lastName: formData.get('lastName'),
-                phone: formData.get('phone')
-            },
-            shipping: {
-                address: formData.get('address'),
-                city: formData.get('city'),
-                state: formData.get('state'),
-                zipCode: formData.get('zipCode'),
-                country: formData.get('country')
-            },
-            items: cart,
-            totals: {
-                subtotal: subtotal,
-                tax: tax,
-                shipping: shipping,
-                total: total
-            },
-            status: 'pending',
-            createdAt: new Date().toISOString()
+          customer: {
+            email: formData.get("email"),
+            firstName: formData.get("firstName"),
+            lastName: formData.get("lastName"),
+            phone: formData.get("phone"),
+          },
+          shipping: {
+            address: formData.get("address"),
+            city: formData.get("city"),
+            state: formData.get("state"),
+            zipCode: formData.get("zipCode"),
+            country: formData.get("country"),
+          },
+          items: cart,
+          totals: {
+            subtotal: subtotal,
+            tax: tax,
+            shipping: shipping,
+            total: total,
+          },
+          status: "pending",
+          createdAt: new Date().toISOString(),
         };
 
-        // Save to Firebase
-        const docRef = await db.collection('orders').add(orderData);
-        console.log('Order saved with ID:', docRef.id);
+        // Save to Firebase Firestore
+        const docRef = await db.collection("orders").add(orderData);
+        console.log("Order saved with ID:", docRef.id);
 
         // Create Stripe checkout session
-        // Replace YOUR_BACKEND_URL with your actual backend URL
-        const response = await fetch('YOUR_BACKEND_URL/create-checkout-session', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                items: cart,
-                customerInfo: orderData.customer,
-                orderId: docRef.id
-            }),
+        // Replace YOUR_BACKEND_URL with your actual backend endpoint
+        const response = await fetch("YOUR_BACKEND_URL/create-checkout-session", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            items: cart,
+            customerInfo: orderData.customer,
+            orderId: docRef.id,
+          }),
         });
 
         const { url } = await response.json();
 
-        // Redirect to Stripe checkout
+        // Redirect to Stripe hosted checkout
         window.location.href = url;
-
-    } catch (error) {
-        console.error('Error processing order:', error);
-        alert('There was an error processing your order. Please try again.');
+      } catch (error) {
+        console.error("Error processing order:", error);
+        alert("There was an error processing your order. Please try again.");
         checkoutBtn.disabled = false;
-        checkoutBtn.textContent = 'Proceed to Payment';
+        checkoutBtn.textContent = "Proceed to Payment";
+      }
     }
-}
 
-        // Display cart on page load
-        displayCart();
-    </script>
+    // Initialize cart display on load
+    displayCart();
+  </script>
 </body>
 </html>
